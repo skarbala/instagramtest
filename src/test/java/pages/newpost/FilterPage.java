@@ -2,7 +2,7 @@ package pages.newpost;
 
 import org.openqa.selenium.By;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 import static org.openqa.selenium.By.xpath;
 import static utils.GesturesUtils.swipeLeft;
 

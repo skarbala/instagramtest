@@ -6,7 +6,7 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;

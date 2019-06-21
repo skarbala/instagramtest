@@ -2,7 +2,7 @@ package pages.newpost;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 

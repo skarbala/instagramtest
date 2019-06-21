@@ -6,7 +6,7 @@ import io.appium.java_client.touch.offset.PointOption;
 
 import java.time.Duration;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 
 public class GesturesUtils {
 

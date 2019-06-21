@@ -2,7 +2,7 @@ package pages;
 
 import context.User;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 import static org.openqa.selenium.By.id;
 
 public class LoginPage {

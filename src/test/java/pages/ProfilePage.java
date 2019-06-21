@@ -3,7 +3,7 @@ package pages;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 
-import static context.TestBase.getAppiumDriver;
+import static context.DriverProvider.getAppiumDriver;
 import static utils.GesturesUtils.swipeUp;
 
 public class ProfilePage {

@@ -8,8 +8,7 @@ import static context.DataProvider.getUser;
 public class LoginSteps {
     @Given("user is logged in")
     public void iAmLoggedIn() {
-        new LoginPage()
-            .loginAsUser(getUser("furbo.slav"));
+        new LoginPage().loginAsUser(getUser("furbo.slav"));
     }
 
 }

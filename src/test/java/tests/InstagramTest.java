@@ -1,6 +1,6 @@
 package tests;
 
-import context.TestBase;
+import context.DriverProvider;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.newpost.FilterPage;
@@ -9,7 +9,7 @@ import pages.newpost.SharePage;
 
 import static context.DataProvider.getUser;
 
-public class InstagramTest extends TestBase {
+public class InstagramTest extends DriverProvider {
 
     @Test
     public void testComment() throws InterruptedException {

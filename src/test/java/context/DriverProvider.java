@@ -5,13 +5,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.BeforeMethod;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class TestBase {
+public class DriverProvider {
 
     public static AndroidDriver<MobileElement> getAppiumDriver() {
         return appiumDriver;
@@ -23,16 +21,11 @@ public class TestBase {
 
     private static AndroidDriver appiumDriver;
 
-    @BeforeMethod
-    public void setUp() throws IOException {
-        appiumDriver = initializeLocalDriver();
-    }
-
     private static AndroidDriver initializeLocalDriver() throws MalformedURLException {
         return new AndroidDriver(
             new URL("http://127.0.0.1:4723/wd/hub"),
             getAndroidCapabilities()
-            );
+        );
     }
 
     private AndroidDriver initializeBsDriver() throws MalformedURLException {
@@ -47,15 +40,12 @@ public class TestBase {
         capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
-        capabilities.setCapability(
-            AndroidMobileCapabilityType.APP_PACKAGE,
-            "com.instagram.android"
-        );
-        capabilities.setCapability(
-            AndroidMobileCapabilityType.APP_ACTIVITY,
+
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.instagram.android");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
             "com.instagram.android.activity.MainTabActivity"
         );
-        capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
+
         capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
         capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
@@ -93,6 +83,10 @@ public class TestBase {
         return capabilities;
     }
 
+    private URL getBsUrl() throws MalformedURLException {
+        return new URL("https://USERNAME:USERACCESSKEY@hub-cloud.browserstack.com/wd/hub");
+    }
+
     private static DesiredCapabilities getAndroidChromeCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
@@ -105,12 +99,5 @@ public class TestBase {
         capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
 
         return capabilities;
-    }
-
-
-
-    private URL getBsUrl() throws MalformedURLException {
-        return new URL("https://cardlaybrowserst1:YpMDmUpyq11s6GnbzTmH@hub-cloud.browserstack.com/wd/hub");
-
     }
 }
