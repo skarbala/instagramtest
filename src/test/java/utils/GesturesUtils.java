@@ -10,11 +10,11 @@ import static context.TestBase.getAppiumDriver;
 
 public class GesturesUtils {
 
-    public static void swipeUp() {
+    public static void swipeUp(int yOffsetStart, int yOffsetEnd) {
         new TouchAction(getAppiumDriver())
-            .press(PointOption.point(100, 800))
+            .press(PointOption.point(100, yOffsetStart))
             .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
-            .moveTo((PointOption.point(100, 300)))
+            .moveTo((PointOption.point(100, yOffsetEnd)))
             .release()
             .perform();
     }

@@ -7,6 +7,8 @@ import pages.newpost.FilterPage;
 import pages.newpost.FirstPage;
 import pages.newpost.SharePage;
 
+import static context.DataProvider.getUser;
+
 public class InstagramTest extends TestBase {
 
     @Test
@@ -16,7 +18,7 @@ public class InstagramTest extends TestBase {
         new LoginPage()
             .loginAsUser(getUser("furbo.slav"))
             .openProfile()
-            .openPhoto()
+            .openFirstPhoto()
             .postComment(commentText)
             .checkComment(commentText)
             .deleteComment(commentText);

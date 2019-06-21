@@ -10,7 +10,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 public class MainPage {
 
-    MainPage() {
+    public MainPage() {
 
     }
 

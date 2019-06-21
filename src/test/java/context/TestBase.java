@@ -1,6 +1,5 @@
 package context;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
@@ -8,12 +7,9 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeMethod;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 public class TestBase {
 
@@ -21,16 +17,18 @@ public class TestBase {
         return appiumDriver;
     }
 
-    private static AndroidDriver appiumDriver;
-    private List<User> users;
-
-    @BeforeMethod
-    public void setUp() throws IOException {
-        initializeUsers();
+    public static void initializeDriver() throws MalformedURLException {
         appiumDriver = initializeLocalDriver();
     }
 
-    private AndroidDriver initializeLocalDriver() throws MalformedURLException {
+    private static AndroidDriver appiumDriver;
+
+    @BeforeMethod
+    public void setUp() throws IOException {
+        appiumDriver = initializeLocalDriver();
+    }
+
+    private static AndroidDriver initializeLocalDriver() throws MalformedURLException {
         return new AndroidDriver(
             new URL("http://127.0.0.1:4723/wd/hub"),
             getAndroidCapabilities()
@@ -109,17 +107,7 @@ public class TestBase {
         return capabilities;
     }
 
-    private void initializeUsers() throws IOException {
-        users = Arrays.asList(new ObjectMapper()
-            .readValue(new File("src/test/resources/users.json"), User[].class));
-    }
 
-    protected User getUser(String userName) {
-        return users.stream()
-            .filter(user -> user.getUserName().equals(userName))
-            .findFirst()
-            .orElseThrow(NullPointerException::new);
-    }
 
     private URL getBsUrl() throws MalformedURLException {
         return new URL("https://cardlaybrowserst1:YpMDmUpyq11s6GnbzTmH@hub-cloud.browserstack.com/wd/hub");
