@@ -7,10 +7,6 @@ import static org.openqa.selenium.By.id;
 
 public class LoginPage {
 
-    public LoginPage() {
-
-    }
-
     public MainPage loginAsUser(User user) {
         getAppiumDriver().findElement(id("log_in_button")).click();
         getAppiumDriver().findElement(id("login_username")).setValue(user.getUserName());

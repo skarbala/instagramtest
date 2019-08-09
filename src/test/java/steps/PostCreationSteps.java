@@ -1,11 +1,15 @@
 package steps;
 
+import context.Context;
+import context.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import pages.MainPage;
 import pages.newpost.FilterPage;
 import pages.newpost.FirstPage;
 import pages.newpost.SharePage;
+
+import static context.Context.POST_TEXT;
 
 public class PostCreationSteps {
 
@@ -21,7 +25,6 @@ public class PostCreationSteps {
         new FirstPage().next();
     }
 
-
     @And("user selects filter (\\w*)")
     public void selectFilterLudwig(String filterName) {
         new FilterPage().selectFilter(filterName);
@@ -32,9 +35,11 @@ public class PostCreationSteps {
         new FilterPage().next();
     }
 
-    @And("user adds text '([?#\\w\\s]*)'")
-    public void userAddsText(String text) {
-        new SharePage().addCaption(text);
+    @And("user adds text")
+    public void userAddsText() {
+        String defaultText = "this is very interesting post #instagram";
+        ScenarioContext.getInstance().setContext(POST_TEXT, defaultText);
+        new SharePage().addCaption((String) ScenarioContext.getInstance().getContext(POST_TEXT));
     }
 
     @And("user shares the post")
