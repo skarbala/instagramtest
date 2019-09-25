@@ -2,16 +2,17 @@ package pages;
 
 import context.User;
 
-import static context.DriverProvider.getAppiumDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 import static org.openqa.selenium.By.id;
 
 public class LoginPage {
 
-    public MainPage loginAsUser(User user) {
-        getAppiumDriver().findElement(id("log_in_button")).click();
-        getAppiumDriver().findElement(id("login_username")).setValue(user.getUserName());
-        getAppiumDriver().findElement(id("password")).setValue(user.getPassword());
-        getAppiumDriver().findElement(id("button_text")).click();
-        return new MainPage();
+    public HomePage loginAsUser(User user) {
+        $(id("log_in_button")).click();
+        $(id("login_username")).setValue(user.getUserName());
+        $(id("password")).setValue(user.getPassword());
+        $(id("button_text")).click();
+        return page(HomePage.class);
     }
 }

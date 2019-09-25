@@ -1,23 +1,25 @@
 package steps;
 
-import context.Context;
 import context.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import pages.MainPage;
+import pages.HomePage;
 import pages.newpost.FilterPage;
 import pages.newpost.FirstPage;
 import pages.newpost.SharePage;
 
+import static com.codeborne.selenide.Selectors.byId;
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
 import static context.Context.POST_TEXT;
 
 public class PostCreationSteps {
 
-    private MainPage mainPage;
+    private HomePage mainPage;
 
     @When("user starts new post")
     public void iStartNewPost() {
-        new MainPage().startNewPost();
+        new HomePage().startNewPost();
     }
 
     @And("user gets to Filter page")
@@ -45,5 +47,11 @@ public class PostCreationSteps {
     @And("user shares the post")
     public void userSharesThePost() {
         new SharePage().next();
+    }
+
+    @And("user takes photo")
+    public void userTakesPhoto() {
+        $(byXpath("//android.widget.TextView[@text='PHOTO']")).click();
+        $(byId("shutter_button")).click();
     }
 }

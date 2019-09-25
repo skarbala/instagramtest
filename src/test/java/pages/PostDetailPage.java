@@ -5,21 +5,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 import static context.DriverProvider.getAppiumDriver;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class PostDetailPage {
 
     public PostDetailPage postComment(String commentText) {
         getAppiumDriver().findElementByAccessibilityId("Comment").click();
-        getAppiumDriver().findElement(id("layout_comment_thread_edittext")).setValue(commentText);
-        MobileElement postCommentButton = getAppiumDriver().findElement(id("layout_comment_thread_post_button_click_area"));
-        new WebDriverWait(getAppiumDriver(), 10)
-            .until(elementToBeClickable(postCommentButton))
+        $(id("layout_comment_thread_edittext")).setValue(commentText);
+        $(id("layout_comment_thread_post_button_click_area"))
+            .shouldBe(enabled)
             .click();
         return this;
     }
@@ -51,9 +51,6 @@ public class PostDetailPage {
     }
 
     public void checkDescription(String expectedText) {
-        String actualText = new WebDriverWait(getAppiumDriver(), 10)
-            .until(visibilityOfElementLocated(id("row_feed_comment_textview_layout")))
-            .getText();
-        assertThat(actualText).contains(expectedText);
+        $(id("row_feed_comment_textview_layout")).shouldHave(text(expectedText));
     }
 }

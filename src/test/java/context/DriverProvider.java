@@ -1,5 +1,6 @@
 package context;
 
+import com.codeborne.selenide.WebDriverRunner;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
@@ -17,6 +18,7 @@ public class DriverProvider {
 
     public static void initializeDriver() throws MalformedURLException {
         appiumDriver = initializeLocalDriver();
+        WebDriverRunner.setWebDriver(appiumDriver);
     }
 
     private static AndroidDriver appiumDriver;

@@ -1,10 +1,9 @@
 package pages.newpost;
 
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.codeborne.selenide.Condition;
 
-import static context.DriverProvider.getAppiumDriver;
+import static com.codeborne.selenide.Selenide.$;
 import static org.openqa.selenium.By.id;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public abstract class GeneralPage {
 
@@ -13,12 +12,12 @@ public abstract class GeneralPage {
     }
 
     private void waitForPageToLoad() {
-        new WebDriverWait(getAppiumDriver(), 20)
-            .until(visibilityOfElementLocated(id("next_button_textview")));
+        $(id("next_button_textview"))
+            .waitUntil(Condition.visible, 15000);
     }
 
     public GeneralPage next() {
-        getAppiumDriver().findElement(id("next_button_textview")).click();
+        $(id("next_button_textview")).click();
         return this;
     }
 }

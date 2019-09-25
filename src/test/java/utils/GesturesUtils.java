@@ -10,7 +10,7 @@ import static context.DriverProvider.getAppiumDriver;
 
 public class GesturesUtils {
 
-    public static void swipeUp(int yOffsetStart, int yOffsetEnd) {
+    public static void swipeVertically(int yOffsetStart, int yOffsetEnd) {
         new TouchAction(getAppiumDriver())
             .press(PointOption.point(100, yOffsetStart))
             .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
@@ -19,7 +19,7 @@ public class GesturesUtils {
             .perform();
     }
 
-    public static void swipeLeft(int xOffsetStart, int xOffsetEnd, int yOffset) {
+    public static void swipeHorizontally(int xOffsetStart, int xOffsetEnd, int yOffset) {
         new TouchAction(getAppiumDriver())
             .press(PointOption.point(xOffsetStart, yOffset))
             .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
