@@ -18,7 +18,7 @@ public class DriverProvider {
     }
 
     public static void initializeDriver(Scenario scenario) throws MalformedURLException {
-        appiumDriver = initializeBsDriver(scenario);
+        appiumDriver = initializeLocalDriver();
         WebDriverRunner.setWebDriver(appiumDriver);
     }
 
@@ -27,7 +27,7 @@ public class DriverProvider {
     private static AndroidDriver initializeLocalDriver() throws MalformedURLException {
         return new AndroidDriver(
             new URL("http://127.0.0.1:4723/wd/hub"),
-            getAndroidCapabilities()
+            getAndroidCapabilitiesKiwi()
         );
     }
 
@@ -37,18 +37,34 @@ public class DriverProvider {
             getAndroidCapabilitiesBs(scenario));
     }
 
-    private static DesiredCapabilities getAndroidCapabilities() {
+    private static DesiredCapabilities getAndroidCapabilitiesInstagram() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
         capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
 
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.instagram.android");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.scenarios.android");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
-            "com.instagram.android.activity.MainTabActivity"
+            "com.scenarios.android.activity.MainTabActivity"
         );
+        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
+        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+        return capabilities;
+    }
 
+    private static DesiredCapabilities getAndroidCapabilitiesKiwi() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
+        capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
+
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.skypicker.main");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
+            "com.trinerdis.skypicker.activity.initialization.SplashActivity"
+//            "com.trinerdis.skypicker.activity.initialization.DeepLinkActivity"
+        );
         capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
         capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
         return capabilities;
@@ -65,11 +81,11 @@ public class DriverProvider {
         );
         capabilities.setCapability(
             AndroidMobileCapabilityType.APP_PACKAGE,
-            "com.instagram.android"
+            "com.scenarios.android"
         );
         capabilities.setCapability(
             AndroidMobileCapabilityType.APP_ACTIVITY,
-            "com.instagram.android.activity.MainTabActivity"
+            "com.scenarios.android.activity.MainTabActivity"
         );
         capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
         capabilities.setCapability("name", scenario.getName());
