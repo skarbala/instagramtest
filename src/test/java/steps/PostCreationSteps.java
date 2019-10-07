@@ -57,7 +57,8 @@ public class PostCreationSteps {
 
     @And("user takes photo")
     public void userTakesPhoto() throws InterruptedException {
-        $(byXpath("//android.widget.TextView[@text='GALLERY']")).should(Condition.appear);
+        $(byXpath("//android.widget.TextView[@text='GALLERY']"))
+            .should(Condition.appear);
         $(byXpath("//android.widget.TextView[@text='PHOTO']")).click();
         Thread.sleep(3000);
         $(byId("shutter_button")).click();

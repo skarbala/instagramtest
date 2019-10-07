@@ -21,11 +21,6 @@ import context.ScenarioContext;
 
 public class HomePage {
 
-    public ProfilePage openProfile() {
-        $(xpath("//android.widget.FrameLayout[@content-desc='Profile']")).click();
-        return new ProfilePage();
-    }
-
     public void startNewPost() {
         $(xpath("//android.widget.FrameLayout[@content-desc='Camera']"))
             .waitUntil(Condition.appear, 15000)
