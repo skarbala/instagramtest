@@ -1,16 +1,23 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import context.ScenarioContext;
-import org.openqa.selenium.By;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static context.Context.POST_TEXT;
-import static context.DriverProvider.getAppiumDriver;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
+
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
+
+import static context.Context.POST_TEXT;
+import static context.DriverProvider.getAppiumDriver;
 import static utils.GesturesUtils.swipeVertically;
+
+import org.openqa.selenium.By;
+
+import com.codeborne.selenide.Condition;
+
+import context.ScenarioContext;
 
 public class HomePage {
 
@@ -26,10 +33,8 @@ public class HomePage {
     }
 
     public void checkPhotoAppearsInFeed() {
-        $(id("row_feed_photo_profile_name"))
-            .waitUntil(Condition.visible, 15000)
-            .shouldHave(text("furbo.slav"));
-
+        $(byXpath("//*[contains(@text,'furbo.slav')]"))
+            .waitUntil(visible, 15000);
 
         swipeUntilDescriptionIsDisplayed();
         $(id("row_feed_comment_textview_layout"))
