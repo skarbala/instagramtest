@@ -1,5 +1,7 @@
 package steps;
 
+import static org.openqa.selenium.By.id;
+
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
@@ -14,7 +16,6 @@ import cucumber.api.java.en.When;
 import pages.HomePage;
 import pages.newpost.FilterPage;
 import pages.newpost.FirstPage;
-import pages.newpost.SharePage;
 
 public class PostCreationSteps {
 
@@ -44,12 +45,14 @@ public class PostCreationSteps {
     public void userAddsText() {
         String defaultText = "Automaticky post | QA meetup | 5.11.2019 #furbo #slido";
         ScenarioContext.getInstance().setContext(POST_TEXT, defaultText);
-        new SharePage().addCaption((String) ScenarioContext.getInstance().getContext(POST_TEXT));
+        $(id("next_button_textview"))
+            .waitUntil(Condition.visible, 15000);
+        $(id("caption_text_view")).sendKeys((String) ScenarioContext.getInstance().getContext(POST_TEXT));
     }
 
     @And("user shares the post")
     public void userSharesThePost() {
-        new SharePage().next();
+        $(id("next_button_textview")).click();
     }
 
     @And("user takes photo")
