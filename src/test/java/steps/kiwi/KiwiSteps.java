@@ -1,4 +1,4 @@
-package steps;
+package steps.kiwi;
 
 import com.codeborne.selenide.Condition;
 import cucumber.api.java.en.And;
@@ -15,7 +15,7 @@ public class KiwiSteps {
     @Given("I am on search page")
     public void iAmOnSearchPage() {
         $(byId("negative_button")).click();
-        $(byId("search_button")).waitUntil(Condition.appears, 15000);
+        $(byId("search_button")).waitUntil(Condition.appears, 25000);
     }
 
     @When("I enter start destination")
