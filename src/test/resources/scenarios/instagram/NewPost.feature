@@ -6,7 +6,7 @@ Feature: New Post
     When  user starts new post
     And   user takes photo
 
-    When  user selects filter Ludwig
+    When  user selects filter Reyes
     Then  user gets to Share page
     And   user adds text
 

@@ -27,7 +27,7 @@ public class DriverProvider {
     private static AndroidDriver initializeLocalDriver() throws MalformedURLException {
         return new AndroidDriver(
             new URL("http://127.0.0.1:4723/wd/hub"),
-            getAndroidCapabilitiesKiwi()
+            getAndroidCapabilitiesInstagram()
         );
     }
 
@@ -44,12 +44,14 @@ public class DriverProvider {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
 
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.scenarios.android");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.instagram.android");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
-            "com.scenarios.android.activity.MainTabActivity"
+            "com.instagram.android.activity.MainTabActivity"
         );
         capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
         capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+        capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
+
         return capabilities;
     }
 
