@@ -24,23 +24,23 @@ public class KiwiSteps {
         $(byId("search_button")).waitUntil(Condition.appears, 60000);
     }
 
-    @When("I enter start destination")
-    public void iEnterStartDestination() {
+    @When("I enter (\\w+) as start destination")
+    public void iEnterStartDestination(String destination) {
         $(byId("from_container")).click();
         $(byId("button_close")).waitUntil(Condition.visible, 15000);
-        $(byId("input_text")).setValue("Ouagadougou");
+        $(byId("input_text")).setValue(destination);
         $$(byId("item_label_text_view"))
-            .find(Condition.text("Ouagadougou"))
+            .find(Condition.text(destination))
             .click();
     }
 
-    @When("I enter end destination")
-    public void iEnterEndDestination() {
+    @When("I enter (\\w+) as end destination")
+    public void iEnterEndDestination(String destination) {
         $(byId("to_container")).click();
         $(byId("button_close")).waitUntil(Condition.visible, 15000);
-        $(byId("input_text")).setValue("Ulaanbaatar");
+        $(byId("input_text")).setValue(destination);
         $$(byId("item_label_text_view"))
-            .find(Condition.text("Ulaanbaatar"))
+            .find(Condition.text(destination))
             .click();
     }
 
@@ -54,7 +54,7 @@ public class KiwiSteps {
         $(byId("results_list"))
             .waitUntil(Condition.appears, 15000)
             .findAll(byId("result"))
-            .shouldHave(sizeGreaterThan(0), 15000);
+            .shouldHave(sizeGreaterThan(1), 15000);
     }
 
     @And("first flight contains price in correct format")
@@ -62,6 +62,7 @@ public class KiwiSteps {
         $(byId("results_list"))
             .find(byId("result"))
             .find(By.id("price"))
+            .should(Condition.appear)
             .should(Condition.matchText("^\\$(,?.?\\d)+$"));
     }
 }
