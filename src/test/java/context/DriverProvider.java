@@ -12,26 +12,34 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverProvider {
+    
+    private static final String BS_USER = "USER";
+    private static final String BS_PASSWORD = "PASSWORD";
+    private static AndroidDriver appiumDriver;
 
     public static AndroidDriver<MobileElement> getAppiumDriver() {
         return appiumDriver;
     }
 
-    public static void initializeDriver(Scenario scenario) throws MalformedURLException {
-        appiumDriver = initializeLocalDriver();
+    public static void initializeLocalInstagramDriver() throws MalformedURLException {
+        appiumDriver = buildLocalInstagramDriver();
         WebDriverRunner.setWebDriver(appiumDriver);
     }
 
-    private static AndroidDriver appiumDriver;
+    public static void initializeBrowserstackKiwiDriver(Scenario scenario) throws MalformedURLException {
+        appiumDriver = buildBrowserstackKiwiDriver(scenario);
+        WebDriverRunner.setWebDriver(appiumDriver);
+    }
 
-    private static AndroidDriver initializeLocalDriver() throws MalformedURLException {
+
+    private static AndroidDriver buildLocalInstagramDriver() throws MalformedURLException {
         return new AndroidDriver(
             new URL("http://127.0.0.1:4723/wd/hub"),
             getAndroidCapabilitiesInstagram()
         );
     }
 
-    private static AndroidDriver initializeBsDriver(Scenario scenario) throws MalformedURLException {
+    private static AndroidDriver buildBrowserstackKiwiDriver(Scenario scenario) throws MalformedURLException {
         return new AndroidDriver(
             getBsUrl(),
             getAndroidCapabilitiesBs(scenario));
@@ -48,29 +56,12 @@ public class DriverProvider {
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
             "com.instagram.android.activity.MainTabActivity"
         );
-        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
-        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+
         capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
 
         return capabilities;
     }
 
-    private static DesiredCapabilities getAndroidCapabilitiesKiwi() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
-        capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
-
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.skypicker.main");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
-            "com.trinerdis.skypicker.activity.initialization.SplashActivity"
-//            "com.trinerdis.skypicker.activity.initialization.DeepLinkActivity"
-        );
-        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
-        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
-        return capabilities;
-    }
 
     private static DesiredCapabilities getAndroidCapabilitiesBs(Scenario scenario) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -79,15 +70,15 @@ public class DriverProvider {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
         capabilities.setCapability(
             MobileCapabilityType.APP,
-            "bs://15dc0ab061271e0db2101f3736f325b990369d98"
+            "bs://3584ee2c3af9e958e14a23b730749ddb44e866d1"
         );
         capabilities.setCapability(
             AndroidMobileCapabilityType.APP_PACKAGE,
-            "com.scenarios.android"
+            "com.skypicker.main"
         );
         capabilities.setCapability(
             AndroidMobileCapabilityType.APP_ACTIVITY,
-            "com.scenarios.android.activity.MainTabActivity"
+            "com.trinerdis.skypicker.activity.initialization.SplashActivity"
         );
         capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
         capabilities.setCapability("name", scenario.getName());
@@ -102,20 +93,8 @@ public class DriverProvider {
     }
 
     private static URL getBsUrl() throws MalformedURLException {
-        return new URL("https://USERNAME:USERACCESSKEY@hub-cloud.browserstack.com/wd/hub");
+        String url = String.format("https://%s:%s@hub-cloud.browserstack.com/wd/hub", BS_USER, BS_PASSWORD);
+        return new URL(url);
     }
 
-    private static DesiredCapabilities getAndroidChromeCapabilities() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
-        capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
-        capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-        capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
-        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
-        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
-
-        return capabilities;
-    }
 }

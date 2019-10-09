@@ -1,4 +1,4 @@
-package steps;
+package steps.instagram;
 
 import static org.openqa.selenium.By.id;
 

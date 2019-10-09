@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = "src/test/resources/scenarios/kiwi",
-    glue = {"steps", "hooks"},
+    glue = {"steps.kiwi", "hooks.kiwi"},
     junit = "--step-notifications"
 )
 public class RunKiwiTest {

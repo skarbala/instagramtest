@@ -1,10 +1,12 @@
 package steps.kiwi;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ex.ElementNotFound;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selectors.byId;
@@ -14,8 +16,12 @@ import static com.codeborne.selenide.Selenide.$$;
 public class KiwiSteps {
     @Given("I am on search page")
     public void iAmOnSearchPage() {
-        $(byId("negative_button")).click();
-        $(byId("search_button")).waitUntil(Condition.appears, 25000);
+        try {
+            $(byId("negative_button")).click();
+        } catch (ElementNotFound e) {
+
+        }
+        $(byId("search_button")).waitUntil(Condition.appears, 60000);
     }
 
     @When("I enter start destination")
@@ -36,7 +42,6 @@ public class KiwiSteps {
         $$(byId("item_label_text_view"))
             .find(Condition.text("Ulaanbaatar"))
             .click();
-        System.out.println("WEfwef");
     }
 
     @When("I search for flight")
@@ -54,8 +59,9 @@ public class KiwiSteps {
 
     @And("first flight contains price in correct format")
     public void firstFlightContainsPriceInCorrectFormat() {
-        $(byId("results_list")).find(byId("result")).click();
-        $(byId("button_book")).should(Condition.appear)
-            .should(Condition.matchText("BOOK FOR \\$(,?.?\\d)+"));
+        $(byId("results_list"))
+            .find(byId("result"))
+            .find(By.id("price"))
+            .should(Condition.matchText("^\\$(,?.?\\d)+$"));
     }
 }

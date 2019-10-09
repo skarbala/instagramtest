@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = "src/test/resources/scenarios/instagram",
-    glue = {"steps", "hooks"},
+    glue = {"steps.instagram", "hooks.instagram"},
     junit = "--step-notifications"
 )
 public class RunInstagramTest {
