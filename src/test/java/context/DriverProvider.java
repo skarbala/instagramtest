@@ -1,20 +1,22 @@
 package context;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import com.codeborne.selenide.WebDriverRunner;
+
 import cucumber.api.Scenario;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.MalformedURLException;
-import java.net.URL;
+import utils.TestProperties;
 
 public class DriverProvider {
-    
-    private static final String BS_USER = "USER";
-    private static final String BS_PASSWORD = "PASSWORD";
+
+
     private static AndroidDriver appiumDriver;
 
     public static AndroidDriver<MobileElement> getAppiumDriver() {
@@ -39,26 +41,37 @@ public class DriverProvider {
         );
     }
 
+
+    private static AndroidDriver buildLocalKiwiDriver() throws MalformedURLException {
+        return new AndroidDriver(
+            new URL("http://127.0.0.1:4723/wd/hub"),
+            getAndroidCapabilitiesKiwi()
+        );
+    }
+
     private static AndroidDriver buildBrowserstackKiwiDriver(Scenario scenario) throws MalformedURLException {
         return new AndroidDriver(
             getBsUrl(),
-            getAndroidCapabilitiesBs(scenario));
+            getAndroidCapabilitiesBs(scenario)
+        );
     }
 
     private static DesiredCapabilities getAndroidCapabilitiesInstagram() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
-        capabilities.setCapability(MobileCapabilityType.UDID, "9bc5d6aa0704");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "RedMI");
+        capabilities.setCapability(MobileCapabilityType.UDID, "1407c40b");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
 
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.instagram.android");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
+        capabilities.setCapability(
+            AndroidMobileCapabilityType.APP_ACTIVITY,
             "com.instagram.android.activity.MainTabActivity"
         );
-
+        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
+        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
         capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
-
         return capabilities;
     }
 
@@ -70,7 +83,7 @@ public class DriverProvider {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
         capabilities.setCapability(
             MobileCapabilityType.APP,
-            "bs://3584ee2c3af9e958e14a23b730749ddb44e866d1"
+            "bs://e89ab52d998a17f22006756710f5262cf11074de"
         );
         capabilities.setCapability(
             AndroidMobileCapabilityType.APP_PACKAGE,
@@ -93,8 +106,32 @@ public class DriverProvider {
     }
 
     private static URL getBsUrl() throws MalformedURLException {
-        String url = String.format("https://%s:%s@hub-cloud.browserstack.com/wd/hub", BS_USER, BS_PASSWORD);
+        String url = String.format(
+            "https://%s:%s@hub-cloud.browserstack.com/wd/hub",
+            TestProperties.getInstance().getProperty("bs.user"),
+            TestProperties.getInstance().getProperty("bs.password")
+        );
         return new URL(url);
     }
+
+    private static DesiredCapabilities getAndroidCapabilitiesKiwi() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "MI");
+        capabilities.setCapability(MobileCapabilityType.UDID, "1407c40b");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
+
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.skypicker.main");
+        capabilities.setCapability(
+            AndroidMobileCapabilityType.APP_ACTIVITY,
+            "com.trinerdis.skypicker.activity.initialization.SplashActivity"
+        );
+        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
+        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
+        capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
+        return capabilities;
+    }
+
 
 }

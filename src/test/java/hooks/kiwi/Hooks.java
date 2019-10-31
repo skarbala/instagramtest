@@ -1,6 +1,5 @@
 package hooks.kiwi;
 
-import context.DataProvider;
 import context.DriverProvider;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

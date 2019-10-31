@@ -63,6 +63,6 @@ public class KiwiSteps {
             .find(byId("result"))
             .find(By.id("price"))
             .should(Condition.appear)
-            .should(Condition.matchText("^\\$(,?.?\\d)+$"));
+            .waitUntil(Condition.matchText("(,?.?\\d)+$"), 10000);
     }
 }
