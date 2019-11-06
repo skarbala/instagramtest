@@ -58,10 +58,17 @@ public class DriverProvider {
 
     private static DesiredCapabilities getAndroidCapabilitiesInstagram() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "RedMI");
-        capabilities.setCapability(MobileCapabilityType.UDID, "1407c40b");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.0");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
+            TestProperties.getInstance().getProperty("android.phone.name"));
+        capabilities.setCapability(
+            MobileCapabilityType.UDID,
+            TestProperties.getInstance().getProperty("android.phone.id"));
+        capabilities.setCapability(
+            MobileCapabilityType.PLATFORM_NAME,
+            TestProperties.getInstance().getProperty("android.phone.os")
+        );
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
+            TestProperties.getInstance().getProperty("android.phone.os.version"));
 
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.instagram.android");
         capabilities.setCapability(
